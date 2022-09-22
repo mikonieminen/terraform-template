@@ -1,0 +1,7 @@
+.env
+
+
+# Ignore Terraform related state and variable data
+.terraform/
+terraform.tfstate*
+terraform.tfvars

@@ -1,0 +1,35 @@
+#!/bin/sh
+set -u
+
+fmt_check=0
+
+eval "set -- $(git diff --name-only --cached | grep "\.sh$" | sort | tr '\n' ' ')"
+for f in "$@"; do
+
+    if test -f "$f" && ! shellcheck "$f"; then
+        printf "[pre_commit] \033[0;31merror\033[0m: File: %s is not formatted properly\n" "$f"
+        fmt_check=1
+    fi
+done
+
+eval "set -- $(git diff --name-only --cached | grep "\.tf$" | sort | tr '\n' ' ')"
+for f in "$@"; do
+
+    if test -f "$f" && ! terraform fmt -check "$f" >/dev/null 2>&1; then
+        printf "[pre_commit] \033[0;31merror\033[0m: File: %s is not formatted properly\n" "$f"
+        fmt_check=1
+    fi
+done
+
+eval "set -- $(git diff --name-only --cached | grep "\.pkr.hcl$" | sort | tr '\n' ' ')"
+for f in "$@"; do
+
+    if test -f "$f" && ! packer fmt -check "$f" >/dev/null 2>&1; then
+        printf "[pre_commit] \033[0;31merror\033[0m: File: %s is not formatted properly\n" "$f"
+        fmt_check=1
+    fi
+done
+
+if [ $fmt_check -ne 0 ]; then
+    exit 1
+fi
