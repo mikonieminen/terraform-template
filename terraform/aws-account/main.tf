@@ -58,12 +58,12 @@ resource "aws_s3_bucket" "terraform_bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "example_bucket_acl" {
+resource "aws_s3_bucket_acl" "terraform_bucket_acl" {
   bucket = aws_s3_bucket.terraform_bucket.bucket
   acl    = "private"
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_bucket_encryption" {
   bucket = aws_s3_bucket.terraform_bucket.bucket
 
   rule {
