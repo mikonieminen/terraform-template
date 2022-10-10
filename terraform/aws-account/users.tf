@@ -21,8 +21,8 @@
 # ```
 #
 # If user is declared as a resource, `terraform destroy` will try to remove this user
-# if this is undesired, add the following lifecycle block to those users or declare them
-# as data when not managing them with terraform.
+# and if this is undesired, add the following lifecycle block to those users or declare
+# them as data when not managing them with terraform.
 #
 # ```hcl
 # resource "aws_iam_user" "myuser" {
@@ -32,3 +32,12 @@
 #   }
 # }
 # ```
+
+data "aws_iam_user" "miko" {
+  user_name = "miko"
+}
+
+resource "aws_key_pair" "miko" {
+  key_name   = "miko@laptop:terraform-example"
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+/dO8atoS6XEkz/fwMnooz3MynU5IpcqLuyiXkt31S miko@laptop:terraform-example"
+}

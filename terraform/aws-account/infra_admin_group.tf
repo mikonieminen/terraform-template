@@ -10,7 +10,7 @@ resource "aws_iam_group_membership" "infra_admins" {
   name = "infra-admin-group-membership"
 
   users = [
-    # TODO: add users here who can manage the infrastructure, but not the AWS account
+    data.aws_iam_user.miko.user_name
   ]
 
   group = aws_iam_group.infra_admins.name
