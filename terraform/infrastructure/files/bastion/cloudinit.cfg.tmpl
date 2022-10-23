@@ -1,0 +1,23 @@
+#cloud-config
+
+hostname: ${hostname}
+
+ssh_authorized_keys:
+%{ for key in admin_keys ~}
+  - ${key}
+%{ endfor ~}
+
+users:
+  - default
+  - name: bastion
+    lock_password: true
+    shell: /sbin/nologin
+    ssh_authorized_keys:
+%{ for key in allowed_bastion_keys ~}
+      - ${key}
+%{ endfor ~}
+
+package_update: true
+package_upgrade: true
+
+final_message: "The system is finally up, after $UPTIME seconds"
