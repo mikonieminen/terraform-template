@@ -39,6 +39,8 @@ make install-git-hooks
 
 ### Initializing Terraform projects
 
+Authenticate as your user that should have full admin rights (for the sake of simplicity). First, make sure you have setup everything properly for using AWS session token script as described [in later in this documentation](#use-get-aws-session-tokensh-script). Then you can run the following command in the root of this project: `eval $(./get-aws-session-token.sh)`
+
 #### First time initialization of `aws-account` project
 
 This part defines account wide configurations, roles and permissions and also this manages S3 bucket for Terraform state.
@@ -54,9 +56,8 @@ terraform apply -target=aws_s3_bucket.terraform_bucket -target=aws_dynamodb_tabl
 ```
 
 3. uncomment `backend` block in `terraform/aws-account/main.tf`
-4. run `terraform output terraform_backend_config`
-5. get `bucket` `region` and `dynamodb_table` values from previous output and replace in the following and run: `terraform init -backend-config="bucket=<bucket>" -backend-config="region=<region>" -backend-config="dynamodb_table=<dynamodb_table>"`
-6. answer `yes` when prompt for replacing pre-existing state while migrating from "local" to newly configured "s3" backend
+4. pick `bucket` `region` and `dynamodb_table` values from the output in step #2 and replace in the following command and finally run the command: `terraform init -backend-config="bucket=<bucket>" -backend-config="region=<region>" -backend-config="dynamodb_table=<dynamodb_table>"`
+5. answer `yes` when prompt for replacing pre-existing state while migrating from "local" to newly configured "s3" backend
 
 #### First time initialization of `infrastructure` project
 
@@ -64,6 +65,7 @@ terraform apply -target=aws_s3_bucket.terraform_bucket -target=aws_dynamodb_tabl
 2. run `terraform output terraform_backend_config`
 3. move to `infrastructure` project: `cd ../terraform/infrastructure`
 4. from the `terraform_backend_config` output, pick `bucket`, `region` and `dynamodb_table` values, replace in the following command `terraform init -backend-config="bucket=<bucket>" -backend-config="region=<region>" -backend-config="dynamodb_table=<dynamodb_table>"` and execute the command
+5. when asked if you want to import existing state to the new backend, answer `yes`
 
 #### Initialize `aws-account` project by reading an existing state
 
