@@ -31,3 +31,7 @@ terraform {
     dynamodb_table = ""
   }
 }
+
+module "env" {
+  source = "./environments"
+}
