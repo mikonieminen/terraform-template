@@ -25,3 +25,7 @@ output "name" {
 output "zone_id" {
   value = local.envs[terraform.workspace].zone_id
 }
+
+output "network" {
+  value = local.envs[terraform.workspace].network
+}
