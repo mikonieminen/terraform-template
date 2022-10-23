@@ -36,6 +36,25 @@ module "env" {
   source = "./environments"
 }
 
+provider "aws" {
+  alias  = "cognito_certs"
+  region = "us-east-1"
+}
+
+module "cognito_certs" {
+  source = "./modules/cognito_certs"
+
+  providers = {
+    aws = aws.cognito_certs
+  }
+
+  zone                    = null
+  validation_record_fqdns = []
+  # TODO: once root zone and cognito is configure, uncomment these
+  # zone                    = data.aws_route53_zone.root
+  # validation_record_fqdns = [for record in aws_route53_record.auth_acm_validation : record.fqdn]
+}
+
 # Get latest Ubuntu Linux 22.04 AMI
 data "aws_ami" "latest_ubuntu_linux_2204" {
   most_recent = true
