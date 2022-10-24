@@ -1,9 +1,12 @@
 
-
 variable "region" {
-  default = "eu-central-1"
+  type        = string
+  description = "Region where the infrastructure's account side resources should be deployed."
+  default     = "eu-central-1"
 }
 
 variable "terraform_backend_s3_bucket_name" {
-  default = ""
+  type        = string
+  description = "S3 bucket name that should be used for Terraform backend."
+  default     = ""
 }
