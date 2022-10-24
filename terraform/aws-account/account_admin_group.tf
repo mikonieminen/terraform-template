@@ -10,7 +10,7 @@ resource "aws_iam_group_membership" "account_admins" {
   name = "account-admin-group-membership"
 
   users = [
-    # TODO: List here all users in this group
+    # TODO: add users here who can manage this AWS account
   ]
 
   group = aws_iam_group.account_admins.name
