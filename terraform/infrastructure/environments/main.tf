@@ -29,3 +29,9 @@ output "zone_id" {
 output "network" {
   value = local.envs[terraform.workspace].network
 }
+
+output "instances" {
+  value = {
+    backend = local.envs[terraform.workspace].instances.backend
+  }
+}

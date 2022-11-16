@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: MIT
+
+# Location: /home/ubuntu/backend.service
+# systemctl enable backend
+# systemctl start backend
+# systemctl status backend
+# https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+
+[Unit]
+Description=Dummy node.js backend
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/app
+EnvironmentFile=/home/ubuntu/backend.env
+ExecStart=/home/ubuntu/start-backend.sh
+KillMode=control-group
+Restart=always
+RestartSec=60s
+StandardOutput=journal+console
+StandardError=journal+console
+SyslogIdentifier=backend-service
+
+[Install]
+WantedBy=multi-user.target

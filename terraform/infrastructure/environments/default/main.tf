@@ -1,8 +1,35 @@
+# Map current caller identity as data so that we use it below
+data "aws_caller_identity" "current" {}
+
+data "aws_ami" "latest_backend" {
+  most_recent = true
+  owners      = [data.aws_caller_identity.current.account_id]
+  filter {
+    name   = "name"
+    values = ["backend-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+}
+
 locals {
   # TODO: define zone ID that should be used for this env
   # probably match with the zone that's created at the aws-account side
   # or if created outsize the project, just provide the ID as a string
   zone_id = ""
+
+  instances = {
+    backend = {
+      ami           = data.aws_ami.latest_backend.id
+      instance_type = "t3a.micro"
+    }
+  }
 
   network = {
     vpc = {
@@ -53,4 +80,8 @@ output "zone_id" {
 
 output "network" {
   value = local.network
+}
+
+output "instances" {
+  value = local.instances
 }

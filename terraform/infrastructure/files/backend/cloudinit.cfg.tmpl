@@ -1,0 +1,56 @@
+#cloud-config
+
+hostname: ${hostname}
+
+ssh_authorized_keys:
+%{ for key in admin_keys ~}
+  - ${key}
+%{ endfor ~}
+
+package_update: true
+package_upgrade: true
+
+write_files:
+  - content: |
+        ${indent(8, start_backend_script_content)}
+    path: /tmp/start-backend.sh
+    permissions: "0700"
+  - content: |
+        ${indent(8, backend_systemd_env_file_content)}
+    path: /tmp/backend.env
+  - content: |
+        ${indent(8, backend_systemd_service_file_content)}
+    path: /tmp/backend.service
+  - encoding: b64
+    content: ${app_bundle_data}
+    path: /tmp/example-node-app.tgz
+  - content: |
+        #!/bin/sh
+        set -eu
+        mv /tmp/start-backend.sh /home/ubuntu/
+        chown ubuntu:ubuntu /home/ubuntu/start-backend.sh
+        mv /tmp/backend.service /home/ubuntu/
+        chown ubuntu:ubuntu /home/ubuntu/backend.service
+        mv /tmp/backend.env /home/ubuntu/
+        chown ubuntu:ubuntu /home/ubuntu/backend.env
+        cd /home/ubuntu
+
+        # Install the example node.js app
+        mkdir app
+        chown ubuntu:ubuntu app
+        cd app
+        sudo -u ubuntu tar xf /tmp/example-node-app.tgz
+        set -a
+        . ../backend.env
+        set +a
+        sudo -u ubuntu --preserve-env="NODE_ENV,NODE_VERSION" /home/ubuntu/.nvm/nvm-exec yarn install
+
+        # Enable the example app
+        systemctl enable --now /home/ubuntu/backend.service
+    path: /tmp/post-install.sh
+    permissions: "0700"
+
+runcmd:
+  - ["/tmp/post-install.sh"]
+
+final_message: "The system is finally up, after $UPTIME seconds"
