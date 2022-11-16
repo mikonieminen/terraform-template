@@ -72,3 +72,27 @@ resource "aws_security_group" "backend_instance" {
     Env  = module.env.name
   }
 }
+
+resource "aws_security_group" "backend" {
+  name_prefix = "backend-${module.env.name}"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = {
+    Name = "backend-${module.env.name}"
+    Env  = module.env.name
+  }
+}
