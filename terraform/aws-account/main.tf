@@ -31,13 +31,13 @@ terraform {
   # block and it's enough simply to run `terraform init` as the last step.
   #
 
-  # backend "s3" {
-  #   bucket         = ""
-  #   key            = "aws-account/terraform.tfstate"
-  #   encrypt        = true
-  #   region         = ""
-  #   dynamodb_table = ""
-  # }
+  backend "s3" {
+    bucket         = ""
+    key            = "aws-account/terraform.tfstate"
+    encrypt        = true
+    region         = ""
+    dynamodb_table = ""
+  }
 }
 
 # Map current caller identity as data so that we use it below
