@@ -77,14 +77,13 @@ locals {
 
   # Default admin keys that allow super user access to machines in this env
   admin_keys = [
-    # By default we allow admin access to holder of the deployment key,
-    # but this should be replaced with some other predefined keys as this
-    # one changes per deployer.
-    var.deployment_key_name
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+/dO8atoS6XEkz/fwMnooz3MynU5IpcqLuyiXkt31S miko@laptop:terraform-example",
   ]
 
   # SSH keys that can be used for SSH login through our bastion
-  allowed_bastion_keys = []
+  allowed_bastion_keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+/dO8atoS6XEkz/fwMnooz3MynU5IpcqLuyiXkt31S miko@laptop:terraform-example",
+  ]
 
   instances = {
     bastion = {
