@@ -1,0 +1,12 @@
+{
+  "name": "example-node-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-static": "^0.7.11"
+  }
+}
