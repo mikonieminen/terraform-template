@@ -1,3 +1,7 @@
+variable "project_name" {
+  type        = string
+  description = "Project name to prefix or scope resources between multiple deployments based on this template."
+}
 
 variable "region" {
   type        = string

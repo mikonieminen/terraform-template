@@ -52,13 +52,13 @@ data "aws_iam_policy" "api_gateway_administrator" {
 }
 
 resource "aws_iam_policy" "allow_aws_account_terraform_state_access" {
-  name = "AllowAwsAccountTerraformStateAccess"
+  name = "${var.project_name}_AllowAwsAccountTerraformStateAccess"
 
   policy = data.aws_iam_policy_document.allow_aws_account_terraform_shared_state_access.json
 }
 
 resource "aws_iam_policy" "allow_infrastructure_terraform_state_access" {
-  name = "AllowInfrastructureTerraformStateAccess"
+  name = "${var.project_name}_AllowInfrastructureTerraformStateAccess"
 
   policy = data.aws_iam_policy_document.allow_infrastructure_terraform_shared_state_access.json
 }

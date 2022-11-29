@@ -44,7 +44,7 @@ terraform {
 data "aws_caller_identity" "current" {}
 
 locals {
-  default_bucket_name = format("%s-terraform-backend", data.aws_caller_identity.current.account_id)
+  default_bucket_name = format("%s-%s-terraform-backend", data.aws_caller_identity.current.account_id, var.project_name)
 }
 
 resource "aws_s3_bucket" "terraform_bucket" {
