@@ -2,7 +2,7 @@
 # This defines needed policies and roles for ECS servies, tasks and containers
 
 resource "aws_iam_role" "ecsTaskExecutionRole" {
-  name               = "ecsTaskExecutionRole"
+  name               = "${var.project_name}_ecsTaskExecutionRole"
   description        = "Allows ECS tasks to call AWS services on your behalf."
   assume_role_policy = data.aws_iam_policy_document.assume_ecs_task_execution_role.json
 }

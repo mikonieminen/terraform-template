@@ -3,11 +3,11 @@
 # terraform import aws_iam_group.infrastructure_admins InfraAdmins
 # ```
 resource "aws_iam_group" "infra_admins" {
-  name = "InfraAdmins"
+  name = "${var.project_name}_InfraAdmins"
 }
 
 resource "aws_iam_group_membership" "infra_admins" {
-  name = "infra-admin-group-membership"
+  name = "${var.project_name}_infra-admin-group-membership"
 
   users = [
     # TODO: add users here who can manage the infrastructure, but not the AWS account

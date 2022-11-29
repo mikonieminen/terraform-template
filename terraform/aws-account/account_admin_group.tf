@@ -3,11 +3,11 @@
 # terraform import aws_iam_group.account_admins AccountAdmins
 # ```
 resource "aws_iam_group" "account_admins" {
-  name = "AccountAdmins"
+  name = "${var.project_name}_AccountAdmins"
 }
 
 resource "aws_iam_group_membership" "account_admins" {
-  name = "account-admin-group-membership"
+  name = "${var.project_name}-account-admin-group-membership"
 
   users = [
     # TODO: add users here who can manage this AWS account

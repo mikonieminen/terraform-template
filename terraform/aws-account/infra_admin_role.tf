@@ -1,5 +1,5 @@
 resource "aws_iam_role" "infra_admin" {
-  name               = "InfraAdmin"
+  name               = "${var.project_name}_InfraAdmin"
   assume_role_policy = data.aws_iam_policy_document.assume_infra_admin_role.json
 }
 
@@ -44,31 +44,31 @@ resource "aws_iam_role_policy_attachment" "infra_admin_network_control" {
 }
 
 resource "aws_iam_policy" "allow_assume_infra_admin_role" {
-  name = "AllowAssumeInfraAdminRole"
+  name = "${var.project_name}_AllowAssumeInfraAdminRole"
 
   policy = data.aws_iam_policy_document.allow_assume_infra_admin_role.json
 }
 
 resource "aws_iam_policy" "allow_running_packer" {
-  name = "AllowRunningPacker"
+  name = "${var.project_name}_AllowRunningPacker"
 
   policy = data.aws_iam_policy_document.allow_running_packer.json
 }
 
 resource "aws_iam_policy" "allow_sops_updates" {
-  name = "AllowSopsUpdates"
+  name = "${var.project_name}_AllowSopsUpdates"
 
   policy = data.aws_iam_policy_document.allow_sops_updates.json
 }
 
 resource "aws_iam_policy" "infra_admin_machine_control" {
-  name = "InfraAdminMachineControl"
+  name = "${var.project_name}_InfraAdminMachineControl"
 
   policy = local.infra_admin_machine_control_merged_policy
 }
 
 resource "aws_iam_policy" "infra_admin_network_control" {
-  name = "InfraAdminNetworkControl"
+  name = "${var.project_name}_InfraAdminNetworkControl"
 
   policy = local.infra_admin_network_control_merged_policy
 }

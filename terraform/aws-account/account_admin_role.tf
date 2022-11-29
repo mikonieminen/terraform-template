@@ -1,5 +1,5 @@
 resource "aws_iam_role" "account_admin" {
-  name               = "AccountAdmin"
+  name               = "${var.project_name}_AccountAdmin"
   assume_role_policy = data.aws_iam_policy_document.assume_account_admin_role.json
 }
 
@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "assume_account_admin_role" {
 }
 
 resource "aws_iam_policy" "allow_assume_account_admin_role" {
-  name = "AllowAssumeAccountAdminRole"
+  name = "${var.project_name}_AllowAssumeAccountAdminRole"
 
   policy = data.aws_iam_policy_document.allow_assume_account_admin_role.json
 }
