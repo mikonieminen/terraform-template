@@ -86,8 +86,8 @@ resource "aws_s3_bucket_object_lock_configuration" "terraform_bucket_object_lock
 
   rule {
     default_retention {
-      mode = "COMPLIANCE"
-      days = 5
+      mode = "GOVERNANCE" # If you want stronger protection use "COMPLIANCE"
+      days = 2
     }
   }
 }
