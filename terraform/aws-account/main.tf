@@ -93,7 +93,7 @@ resource "aws_s3_bucket_object_lock_configuration" "terraform_bucket_object_lock
 }
 
 resource "aws_dynamodb_table" "terraform_state_lock" {
-  name           = "terraform-state-lock"
+  name           = "${aws_s3_bucket.terraform_bucket.bucket}-state-lock"
   read_capacity  = 5
   write_capacity = 5
   hash_key       = "LockID"
